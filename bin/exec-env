@@ -1,0 +1,17 @@
+# #  exec-env -*- mode: sh -*-
+# https://asdf-vm.com/plugins/create.html#bin-exec-env
+# prepare the environment for executing tool shims
+#
+
+set -euo pipefail
+
+function init_sdkman () {
+    # For activating sdkman in a subshell
+    export SDKMAN_DIR="$ASDF_INSTALL_PATH"
+    if [[ -e "${SDKMAN_DIR}/bin/sdkman-init.sh" ]]; then
+        # shellcheck disable=SC1091
+        source "${SDKMAN_DIR}/bin/sdkman-init.sh"
+    fi
+}
+
+init_sdkman
