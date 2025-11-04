@@ -14,9 +14,8 @@
 
 set -euo pipefail
 
-# TODO: Ensure this is the correct GitHub homepage where releases can be downloaded for <YOUR TOOL>.
-GH_REPO="https://github.com/jgrey4296/asdf-sdkman.git"
-TOOL_NAME="sdkman"
+GH_REPO="https://github.com/sdkman/sdkman-cli"
+TOOL_NAME="sdkman-cli"
 TOOL_TEST="sdkman-init.sh"
 
 fail() {
@@ -43,9 +42,7 @@ function list_github_tags() {
 }
 
 function list_all_versions() {
-	# TODO: Adapt this. By default we simply list the tag names from GitHub releases.
-	# Change this function if <YOUR TOOL> has other means of determining installable versions.
-	echo "8.0.20"
+	list_github_tags
 }
 
 function download_release() {
@@ -53,10 +50,10 @@ function download_release() {
 	version="$1"
 	filename="$2"
 
-	url="https://get.sdkman.io"
+	url="$GH_REPO/releases/download/$version/$filename"
 
 	echo "* Downloading $TOOL_NAME release $version..."
-	curl "${curl_opts[@]}" -o "$filename" -C - "$url" || fail "Could not download $url"
+	curl "${curl_opts[@]}" -o "$ASDF_DOWNLOAD_PATH/$filename" -C - "$url" || fail "Could not download $url"
 }
 
 function install_version() {
@@ -71,7 +68,6 @@ function install_version() {
 	(
 		mkdir -p "$install_path"
 		export SDKMAN_DIR="$install_path" && "$install_path/$TOOL_NAME-$ASDF_INSTALL_VERSION.sh"
-
 
 		local tool_cmd
 		tool_cmd="$(echo "$TOOL_TEST" | cut -d' ' -f1)"

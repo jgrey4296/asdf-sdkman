@@ -1,3 +1,3 @@
 <!-- readme.md -*- mode: gfm-mode -*- -->
 
-an asdf plugin to install https://sdkman.io/
+an asdf plugin to install [SDKMan](https://sdkman.io/)
